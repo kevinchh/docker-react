@@ -19,5 +19,4 @@ deploy: #tell travis how to taake our app and deploy it in AWS
   on:
     branch: master #only deploy once we push code to master
   access_key_id: $aws_access_key #use functionality of travis to get the keys from there
-  secret_access_key:
-    secure: "$aws_secret_key"
+  secret_access_key: $aws_secret_key
