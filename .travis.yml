@@ -7,4 +7,17 @@ before_install:
   - docker build -t chhokevin/docker-react -f Dockerfile.dev .
 
 script: #if return != 0, travisCI will think our test failed
-  - docker run -e CI=true chhokevin/docker-react npm run test -- --coverage #-- -- coverage is for npm test to directly return the result 
+  - docker run -e CI=true chhokevin/docker-react npm run test -- --coverage #-- -- coverage is for npm test to directly return the result
+
+deploy: #tell travis how to taake our app and deploy it in AWS
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "Dockerreact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-839149575471"
+  bucket_path: "docker-react"
+  on:
+    branch: master #only deploy once we push code to master
+  access_key_id: $aws_access_key #use functionality of travis to get the keys from there
+  secret_access_key:
+    secure: "$aws_secret_key"
