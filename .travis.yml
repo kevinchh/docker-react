@@ -1,0 +1,10 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t chhokevin/docker-react -f Dockerfile.dev .
+
+script: #if return != 0, travisCI will think our test failed
+  - docker run -e CI=true chhokevin/docker-react npm run test -- --coverage #-- -- coverage is for npm test to directly return the result 
